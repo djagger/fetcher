@@ -120,13 +120,13 @@ func (f *FetchHandler) Fetch(w http.ResponseWriter, req *http.Request) (*api.Res
 
 func (f *FetchHandler) GetTask(w http.ResponseWriter, req *http.Request) (*api.Response, error) {
 	vars := mux.Vars(req)
-	taskKey := vars["id"]
+	taskId := vars["id"]
 
-	if taskKey == "" {
-		return api.ErrorResponse(map[string]string{"error": "taskKey not found"}), nil
+	if taskId == "" {
+		return api.ErrorResponse(map[string]string{"error": "taskId not found"}), nil
 	}
 
-	task, err := f.tempStorageService.Get(taskKey)
+	task, err := f.tempStorageService.Get(settings.TasksKeyPattern + taskId)
 	if err != nil {
 		f.logger.Criticalf("fetchHandler.GetTask, unable to get task: %v", err.Error())
 		return api.InternalServerError(), nil

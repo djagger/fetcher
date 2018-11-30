@@ -1,9 +1,11 @@
 package storage
 
-import "strconv"
+import (
+	"strconv"
 
-const taskKeyPrefix = "task:"
+	"fetcher/pkg/settings"
+)
 
 func TaskKey(id int64) string {
-	return taskKeyPrefix + strconv.FormatInt(id, 10)
+	return settings.TasksKeyPattern + strconv.FormatInt(id, 10)
 }
